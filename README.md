@@ -123,4 +123,4 @@ Users can:
 ## Contributors
 
 - **[Ansh Agarwal]** - 240102120
-- **[Aditya Nitin Parate]** - 240102123
+- **[Parate Aditya Nitin]** - 240102123
