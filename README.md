@@ -1,5 +1,5 @@
 
-# PySpyce : Circuit Simulator
+# Course-Project-EE204 : Circuit Simulator
 
 ## Overview
 
