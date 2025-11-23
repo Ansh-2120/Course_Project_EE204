@@ -1,126 +1,130 @@
-# Course-Project-EE204 : Circuit Simulator
+# Advanced Circuit Simulator
 
-## Overview
+## Description
 
-A Python-based circuit Simulator tool designed to model and analyze electrical (RLC) circuits interactively. 
-It supports both time-domain and frequency-domain analyses using numerical and symbolic computation.
+This is a comprehensive circuit analysis tool that implements conventional circuit analysis methodologies including matrix-based topology analysis, Kirchhoff's laws, and Laplace transform techniques. Built with Python, it provides both educational insight into circuit theory and powerful computational capabilities for analyzing RLC circuits.
 
-### Key Features:
-- Add and analyze RLC components (Resistors, Inductors, Capacitors) and sources (Voltage, Current).
-- Solve circuit equations using Kirchhoff's Current Law (KCL).
-- Perform Laplace transform-based frequency-domain analysis.
-- Generate time-domain responses using inverse Laplace transforms.
-- Visualize circuits as dynamic graphs.
-- Interactive plots for time and frequency responses.
+Unlike simple circuit simulators,it explicitly shows the mathematical framework behind circuit analysis - from incidence matrices to KCL/KVL equations to Laplace domain solutions.
 
 ---
 
-## Libraries Used
+## Features
 
-The following Python libraries are required to run the Circuit Simulator:
-
-- **Streamlit**: For building the interactive web interface.
-- **Sympy**: For symbolic mathematics and solving circuit equations.
-- **NumPy**: For numerical computations and data handling.
-- **Matplotlib**: For plotting and visualizing the circuit diagrams.
-- **Plotly**: For interactive time-domain and frequency-domain plots.
-- **NetworkX**: For graph-based visualization of circuit diagrams.
+- **Matrix-Based Analysis**: Automatic generation of Incidence, Cutset, and Tieset matrices for circuit topology
+- **Equation Visualization**: Step-by-step display of time-domain and Laplace-domain equations
+- **Kirchhoff's Laws**: Explicit KCL (node equations) and KVL (loop equations) formulation
+- **Laplace Transform Analysis**: Symbolic impedance calculations and s-domain solutions
+- **Time-Domain Response**: Inverse Laplace transform for transient analysis
+- **Frequency-Domain Response**: Bode plots (magnitude and phase) for AC analysis
+- **Component Support**: Resistors, Inductors, Capacitors, DC/AC Voltage Sources, Current Sources
+- **Interactive Visualization**: Dynamic circuit diagrams and real-time plotting
 
 ---
 
-## Code Explanation
+## Techniques Used
 
-### `calculations.py`
-This file contains the core class `CircuitSimulator`, which implements the computational logic. 
-It includes methods for:
+### Circuit Analysis Methods
+- **Topology Analysis**: Graph theory for building incidence, cutset, and tieset matrices
+- **Nodal Analysis**: KCL-based node voltage method
+- **Loop Analysis**: KVL-based mesh current method
+- **Laplace Transform**: Converting differential equations to algebraic equations in s-domain
+- **Inverse Laplace Transform**: Converting s-domain solutions back to time-domain
 
-- **Component Management**:
-  - `add_component()`: Adds RLC components and sources to the circuit.
-- **Symbolic Equation Setup**:
-  - `setup_node_variables()`: Creates symbolic variables for voltages and currents.
-  - `build_equations()`: Constructs equations using KCL and component relations.
-- **Solution and Analysis**:
-  - `solve_circuit()`: Solves the equations for node voltages and branch currents.
-  - `get_time_domain_response()`: Calculates time-domain responses via inverse Laplace transforms.
-  - `get_frequency_response()`: Computes frequency response (magnitude and phase) over a given range.
-- **Visualization**:
-  - `create_circuit_visualization()`: Generates dynamic circuit diagrams.
+### Computational Libraries
+- **SymPy**: Symbolic mathematics, Laplace transforms, equation solving
+- **NumPy**: Numerical computations and matrix operations
+- **NetworkX**: Graph algorithms for circuit topology (spanning trees, cycle detection)
+- **Streamlit**: Interactive web-based user interface
+- **Plotly**: Interactive plotting for time and frequency domain
+- **Matplotlib**: Circuit diagram generation
+- **Pandas**: Data display and matrix visualization
 
-### `circuit-simulator.py`
-This file provides the interactive user interface built with Streamlit. 
-Users can:
-- Add circuit components via dropdowns and numeric inputs.
-- Visualize the circuit dynamically.
-- Analyze circuit responses (time and frequency domains) through interactive plots.
-- Manage and clear components as needed.
+---
+
+## Project Structure
+
+```
+├── circuit_simulator.py    # Main UI and interface logic (5-tab layout)
+├── calculations.py         # Core circuit analysis engine
+└── README.md              # This file
+```
+
+### Key Components
+
+**`calculations.py`** - CircuitSimulator class with:
+- Matrix generation methods (incidence, cutset, tieset)
+- Equation builders (time-domain, Laplace, KCL, KVL)
+- Circuit solver using SymPy's symbolic solver
+- Response calculators (time and frequency domain)
+
+**`circuit_simulator.py`** - Streamlit interface with:
+- Component input controls
+- 5 analysis tabs: Circuit Diagram, Matrix Analysis, Equations, Time Domain, Frequency Domain
+- Interactive plotting and equation display
 
 ---
 
 ## How to Run
 
-### Prerequisites
+### Installation
 
-1. Install Python 3.8+.
-2. Install the required libraries using pip:
-   ```bash
-   pip install streamlit sympy numpy matplotlib plotly networkx
-   ```
+1. **Install Python 3.8+**
 
-### Steps
+2. **Install required packages:**
+```bash
+pip install streamlit sympy numpy matplotlib plotly networkx pandas
+```
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <repository-folder>
-   ```
+3. **(Optional) For better circuit layouts:**
+```bash
+# Linux
+sudo apt-get install graphviz graphviz-dev
+pip install pygraphviz
 
-2. Run the simulator using Streamlit:
-   ```bash
-   streamlit run circuit-simulator.py
-   ```
+# macOS
+brew install graphviz
+pip install pygraphviz
+```
 
-3. Open the provided local URL (usually `http://localhost:8501`) in a web browser.
+### Running the Simulator
 
----
+```bash
+streamlit run circuit_simulator.py
+```
 
-## Project Flow
-
-1. **Add Components**:
-   - Specify the type (Resistor, Capacitor, Inductor, Voltage Source, or Current Source).
-   - Enter values and node connections.
-   - For AC sources, specify additional parameters (amplitude, frequency, waveform type).
-2. **Analyze Circuit**:
-   - Solve the circuit equations to compute node voltages and branch currents.
-   - View time-domain and frequency-domain plots.
-3. **Visualize Circuit**:
-   - Explore the dynamically generated circuit graph.
-4. **Iterate**:
-   - Modify components and analyze again.
+Then open your browser to `http://localhost:8501`
 
 ---
 
-## Example
+## Usage
 
-### Input:
-- Add components:
-  - Resistor (100 Ω) between Node 0 and Node 1.
-  - Voltage Source (10 V) between Node 1 and Node 0.
-
-### Output:
-- Voltage at Node 1: 10 V.
-- Time-domain and frequency-domain responses plotted interactively.
+1. **Add Components**: Select type (R/L/C/V/I), enter value, specify nodes
+2. **Solve Circuit**: Click "Solve Circuit" to generate matrices and equations
+3. **View Results**: 
+   - **Matrix Analysis**: See topology matrices (A, Q, B)
+   - **Equations**: View KCL/KVL and Laplace-domain equations
+   - **Time Domain**: Transient response plots
+   - **Frequency Domain**: Bode magnitude and phase plots
 
 ---
 
-## Future Improvements
+## Technical Approach
 
-- Support for additional component types (e.g., transformers, diodes).
-- Enhanced visualization with 3D circuit layouts.
-- Exportable reports for circuit analyses.
+1. **Build Circuit Graph**: Use NetworkX to represent circuit topology
+2. **Generate Matrices**: Create incidence (A), cutset (Q), and tieset (B) matrices
+3. **Formulate Equations**: Build KCL and KVL equations symbolically
+4. **Transform to s-domain**: Apply Laplace transform to get impedances
+5. **Solve System**: Use SymPy to solve linear system symbolically
+6. **Calculate Responses**:
+   - Time: Inverse Laplace transform → numerical evaluation
+   - Frequency: Substitute s = jω → magnitude and phase
 
 ---
 
 ## Contributors
 
-- **[Ansh Agarwal]** - 240102120
-- **[Parate Aditya Nitin]** - 240102123
+- **Ansh Agarwal** - 240102120
+- **Parate Aditya Nitin** - 240102123
+
+**Course**: EE204 - Circuit Theory  
+**Institution**: IIT Guwahati
